@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -25,5 +27,8 @@ public class User {
 
     @Column(nullable = false, length = 100)
     private String password;
+
+    @Column(nullable = false)
+    private LocalDateTime createdAt;
 
 }
