@@ -20,7 +20,7 @@ public class User {
     private Integer id;
 
     @Column(nullable = false, length = 100)
-    private String nome;
+    private String name;
 
     @Column(nullable = false)
     private String email;
