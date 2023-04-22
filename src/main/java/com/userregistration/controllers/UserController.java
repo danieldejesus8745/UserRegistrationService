@@ -5,13 +5,13 @@ import com.userregistration.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import static com.userregistration.utils.Messages.MESSAGE_1;
-import static com.userregistration.utils.Messages.MESSAGE_2;
+import java.util.Objects;
+
+import static com.userregistration.utils.Constants.AUTHENTICATION;
+import static com.userregistration.utils.Constants.UNAUTHENTICATED;
+import static com.userregistration.utils.Messages.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,6 +28,21 @@ public class UserController {
         } catch (IllegalStateException exception) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(MESSAGE_2.getMessage());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<String> getUser(@RequestHeader(AUTHENTICATION) String credentials) {
+        String response = userService.getUser(credentials);
+
+        if (Objects.isNull(response)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MESSAGE_3.getMessage());
+        }
+
+        if (response.equals(UNAUTHENTICATED)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(MESSAGE_4.getMessage());
+        }
+
+        return ResponseEntity.ok(response);
     }
 
 }
