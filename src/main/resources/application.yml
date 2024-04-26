@@ -4,15 +4,16 @@ spring:
 
 ---
 
+# DEV profile
 spring:
   config:
     activate:
       on-profile: dev
 
   datasource:
-    url: jdbc:mysql://localhost:3306/mysql
-    username: root
-    password: mysql
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
 
   jpa:
     hibernate:
@@ -25,6 +26,7 @@ spring:
 
 ---
 
+#PROD profile (Heroku)
 spring:
   config:
     activate:
